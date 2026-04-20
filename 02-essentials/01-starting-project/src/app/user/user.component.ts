@@ -1,7 +1,7 @@
-import { Component, signal, computed } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
+import { Component, Input } from '@angular/core';
+// import { DUMMY_USERS } from '../dummy-users';
 
-const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+// const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 
 @Component({
   selector: 'app-user',
@@ -11,18 +11,20 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
-  selectedUser = signal(DUMMY_USERS[randomIndex]);
+  // @Input()標記該屬性可從外部設置，因為是接收”外部”來的值，所以需要先訂定”接收的型別”
+  // 透過"!"告訴TypeScript這肯定會被設置為某個值
+  @Input({required: true}) avatar!: string;
+  @Input({required: true}) name!: string;
+  @Input() id!: string;
 
-  imagePath = computed(() => 'assets/users/' + this.selectedUser().avatar)
+  get imagePath(): string {
+    return 'assets/users/' + this.avatar;
+  }
 
-
-  // getter 本質上是一個方法，也就是class中的一個函數。可以像property一樣使用，所以不需要顯示調用和執行，它的目的就是生成和返回一個新值。補充:因為getter可以像property一樣使用，因此在使用時候面不用加"執行用"的()。
-  // get imagePath() { 
-  //   return 'assets/users/' + this.selectedUser.avatar;
+  // 需要將@Input()的值進行初始化
+  // constructor() {
+  //   this.avatar = '';
   // }
 
-  onSelectUser() {
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
-    this.selectedUser.set(DUMMY_USERS[randomIndex]);
-  }
+  onSelectUser() {}
 }
