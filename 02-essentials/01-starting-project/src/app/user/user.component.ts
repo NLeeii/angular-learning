@@ -1,6 +1,18 @@
 import { Component, Input, input, computed, output, EventEmitter, Output } from '@angular/core';
 
+// type aliases
+// type User = {
+//   id: string;
+//   avatar: string;
+//   name: string;
+// }
 
+// interface，只能定義 object type
+interface User {
+  id: string;
+  avatar: string;
+  name: string;
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -21,12 +33,7 @@ export class UserComponent {
   // @Input({required: true}) name!: string;
   // @Input() id!: string;
 
-  @Input({required: true}) user!: {
-    id: string;
-    avatar: string;
-    name: string;
-
-  };
+  @Input({required: true}) user!: User;
 
   get imagePath(): string {
     return 'assets/users/' + this.user.avatar;
