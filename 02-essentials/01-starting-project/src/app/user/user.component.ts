@@ -1,4 +1,4 @@
-import { Component, Input, input, computed } from '@angular/core';
+import { Component, Input, input, computed, output, EventEmitter, Output } from '@angular/core';
 // import { DUMMY_USERS } from '../dummy-users';
 
 // const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
@@ -41,6 +41,9 @@ export class UserComponent {
   // })
 
   // 輸出_output =============================================================================
+  @Output() select = new EventEmitter<string>();
 
-  onSelectUser() {}
+  onSelectUser() {
+    this.select.emit(this.id);
+  }
 }
