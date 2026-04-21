@@ -18,15 +18,11 @@ export class UserComponent {
   // @Input()標記該屬性可從外部設置，因為是接收”外部”來的值，所以需要先訂定”接收的型別”
   // @Input() "接受輸入" 這個特性及概念，允許重用具有不同數據(由外部輸入)的component
   // 透過"!"告訴TypeScript這肯定會被設置為某個值
+  
   @Input({required: true}) avatar!: string;
   @Input({required: true}) name!: string;
   @Input() id!: string;
 
-  // 需要將@Input()的值進行初始化
-  // constructor() {
-  //   this.avatar = '';
-  // }
-  
   get imagePath(): string {
     return 'assets/users/' + this.avatar;
   }
@@ -41,9 +37,14 @@ export class UserComponent {
   // })
 
   // 輸出_output =============================================================================
-  @Output() select = new EventEmitter<string>();
+  @Output() select = new EventEmitter<string>(); // 加上泛型類型(generic)賦值，讓TypeScript、Aagular知道你將要發出的值的型別
 
-  onSelectUser() {
+  // ouput()函式用法
+  // select = output<string>();
+
+  // 任務:攔截實體點擊事件，按鈕點擊後把自己的id emit出去
+  // 負責:觸發與廣播
+  onSelectClick() {
     this.select.emit(this.id);
   }
 }
