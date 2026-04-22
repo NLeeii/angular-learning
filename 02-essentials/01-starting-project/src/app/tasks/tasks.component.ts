@@ -43,5 +43,9 @@ export class TasksComponent {
     return this.tasks.filter(task => task.userId === this.userId); 
     // filter()會回傳一個"新陣列"，且回傳值型別"永遠是陣列"，就算找不到值的時候也會回傳空陣列[]，不會回傳undefined
     // find()則是會回傳"單一元素"（可能是物件、字串、數字等，取決於你陣列裡裝什麼），找不到時回傳undefined
-  } 
+  }
+  
+  onCompleteTask(id: string) {
+    this.tasks = this.tasks.filter(task => task.id !== id); // 直接比對整個任務列表，id相同則會直接被篩選掉，達到刪除的效果
+  }
 }
