@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { NewTaskData } from './task/task.model';
 
 @Component({
   selector: 'app-tasks',
@@ -58,6 +59,19 @@ export class TasksComponent {
   }
 
   onCancelAddTask() {
+    this.isAddingTask = false;
+  }
+
+  onAddTask(taskData: NewTaskData) {
+    // taskData裡拿得到的資料可以直接拿，沒有的項目像:id、userId再隨機生成、指派一下
+    this.tasks.unshift({
+      id: new Date().getTime().toString(),
+      userId: this.userId,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.date
+    }); 
+    // 新增完關閉輸入框
     this.isAddingTask = false;
   }
 }

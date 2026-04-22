@@ -1,3 +1,6 @@
+@if(isAddingTask) {
+  <app-new-task (close)="onCancelAddTask()" (add)="onAddTask($event)" />
+}
 <section id="tasks">
   <header>
     <h2>{{ name }}'s Task</h2>
@@ -12,9 +15,6 @@
       <li>
         <app-task [task]="task" (complete)="onCompleteTask($event)"/>
       </li>
-    }
-    @if(isAddingTask) {
-      <app-new-task (close)="onCancelAddTask()"/>
     }
   </ul>
 </section>

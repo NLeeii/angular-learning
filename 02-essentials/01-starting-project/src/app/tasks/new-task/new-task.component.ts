@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { type NewTaskData } from '../task/task.model';
 
 @Component({
   selector: 'app-new-task',
@@ -10,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class NewTaskComponent {
   @Output() cancel = new EventEmitter<void>(); // <void>是個特殊type，表示不會emit出任何數據
+
+  @Output() add = new EventEmitter<NewTaskData>();
 
   enteredTitle = '';
   enteredSummary = '';
@@ -22,5 +25,13 @@ export class NewTaskComponent {
 
   onCancel() {
     this.cancel.emit(); // 上面標示了<void>，因此cancel可以emit一個"不攜帶任何數據"的事件
+  }
+
+  onSubmit() {
+    this.add.emit({
+      title: this.enteredTitle,
+      summary: this.enteredSummary,
+      date: this.enteredDate
+    })
   }
 }
