@@ -1,5 +1,7 @@
 import { Component, Input, input, computed, output, EventEmitter, Output } from '@angular/core';
 
+import { type User } from './user.model'; // 如果是type definition的檔案，可以選擇在前面加上type，增加可讀性
+
 // type aliases
 // type User = {
 //   id: string;
@@ -7,12 +9,6 @@ import { Component, Input, input, computed, output, EventEmitter, Output } from 
 //   name: string;
 // }
 
-// interface，只能定義 object type
-interface User {
-  id: string;
-  avatar: string;
-  name: string;
-}
 @Component({
   selector: 'app-user',
   standalone: true,

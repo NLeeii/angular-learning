@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { type Task } from './task.model';
+
 @Component({
   selector: 'app-task',
   standalone: true,
@@ -8,8 +10,12 @@ import { Component, Input } from '@angular/core';
   styleUrl: './task.component.scss'
 })
 export class TaskComponent {
-  @Input({required: true}) title!:string;
-  @Input({required: true}) summary!:string;
-  @Input({required: true}) dueDate!:string;
+  // @Input({required: true}) title!:string;
+  // @Input({required: true}) summary!:string;
+  // @Input({required: true}) dueDate!:string;
+
+  // input object type
+  @Input({required: true}) task!: Task;
+  // @Input() task?: task;
 
 }
