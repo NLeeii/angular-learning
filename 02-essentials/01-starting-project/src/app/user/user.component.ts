@@ -1,6 +1,7 @@
 import { Component, Input, input, computed, output, EventEmitter, Output } from '@angular/core';
 
-import { type User } from './user.model'; // 如果是type definition的檔案，可以選擇在前面加上type，增加可讀性
+import { type User } from './user.model';
+import { CardComponent } from "../shared/card/card.component"; // 如果是type definition的檔案，可以選擇在前面加上type，增加可讀性
 
 // type aliases
 // type User = {
@@ -12,7 +13,7 @@ import { type User } from './user.model'; // 如果是type definition的檔案�
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

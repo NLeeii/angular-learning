@@ -14,6 +14,8 @@ import { DUMMY_USERS } from './dummy-users';
   styleUrl: './app.component.scss', // 定義元件的CSS。style 寫陣列樣式;styleUrls 指定外部 css 檔案路徑陣列
 })
 
+// AppComponent 是 Smart Component
+// AppComponent (負責「管理資料」與「做決策」)
 export class AppComponent {
   users = DUMMY_USERS;
   selectedUserId?: string; 
