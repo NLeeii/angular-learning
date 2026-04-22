@@ -1,0 +1,29 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<dialog open>
+  <h2>Add Task</h2>
+  <form>
+    <p>
+      <label for="title">Title</label>
+      <!-- ngModel Directive -->
+      <!-- ngModel用於input、textarea或其他與表單form相關的元素 -->
+      <!-- ngModel可以跟 two-way-binding 一起使用 -->
+      <input type="text" id="title" name="title" [(ngModel)]="enteredTitle" /> 
+    </p>
+
+    <p>
+      <label for="summary">Summary</label>
+      <textarea id="summary" rows="5" name="summary" [(ngModel)]="enteredSummary"></textarea>
+    </p>
+
+    <p>
+      <label for="due-date">Due Date</label>
+      <!-- input的結果總是會產生"string"，不會因為type不一樣而產生不同type的值 -->
+      <input type="date" id="due-date" name="due-date" [(ngModel)]="enteredDate" />
+    </p>
+
+    <p class="actions">
+      <button type="button" (click)="onCancel()">Cancel</button>
+      <button type="submit">Create</button>
+    </p>
+  </form>
+</dialog>

@@ -3,7 +3,7 @@
     <h2>{{ name }}'s Task</h2>
     <!-- <p>{{ id }}'s Task</p> -->
     <menu>
-      <button>Add Task</button>
+      <button (click)="onStartAddTask()">Add Task</button>
     </menu>
   </header>
 
@@ -12,6 +12,9 @@
       <li>
         <app-task [task]="task" (complete)="onCompleteTask($event)"/>
       </li>
+    }
+    @if(isAddingTask) {
+      <app-new-task (close)="onCancelAddTask()"/>
     }
   </ul>
 </section>

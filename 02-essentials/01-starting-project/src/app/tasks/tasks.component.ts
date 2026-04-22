@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
+import { NewTaskComponent } from './new-task/new-task.component';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.scss'
 })
@@ -47,5 +48,16 @@ export class TasksComponent {
   
   onCompleteTask(id: string) {
     this.tasks = this.tasks.filter(task => task.id !== id); // 直接比對整個任務列表，id相同則會直接被篩選掉，達到刪除的效果
+  }
+
+  isAddingTask = false;
+  // clicked?: boolean;
+
+  onStartAddTask() {
+    this.isAddingTask = true;
+  }
+
+  onCancelAddTask() {
+    this.isAddingTask = false;
   }
 }
