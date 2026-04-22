@@ -1,7 +1,7 @@
 <div>
-  <button (click)="onSelectClick()">
+  <!-- [class.className] -> 適用於根據單一布林值新增或移除類名。 -->
+  <button  [class.active]="selected" (click)="onSelectClick()"> 
     <img [src]="imagePath" [alt]="user.name">
     <span>{{ user.name }}</span>
-    <!-- <span>{{ id }}</span> -->
   </button>
 </div>

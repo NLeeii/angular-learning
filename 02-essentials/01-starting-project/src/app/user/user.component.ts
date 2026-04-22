@@ -31,6 +31,8 @@ export class UserComponent {
 
   @Input({required: true}) user!: User;
 
+  @Input({required: true}) selected!: boolean; 
+
   get imagePath(): string {
     return 'assets/users/' + this.user.avatar;
   }
