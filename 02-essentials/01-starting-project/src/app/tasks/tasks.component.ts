@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, input } from '@angular/core';
 import { TaskComponent } from './task/task.component';
 import { NewTaskComponent } from './new-task/new-task.component';
-import { NewTaskData } from './task/task.model';
+import { type NewTaskData } from './task/task.model';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -14,64 +15,28 @@ export class TasksComponent {
   @Input({required: true}) name!: string;
   @Input({required: true}) userId!: string;
 
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31',
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    },
-  ]
+  isAddingTask = false;
+
+  // Dependency Injection - 依賴注入
+  // tell Angular which type of value you need and Angular creates it and provides it as an argument.
+  constructor(private tasksService: TasksService) {}
 
   // getter
+  // 如果這筆資料是「依賴別人的變數（如 @Input）計算出來的」，且那個變數「會一直變」，就一定要用 get。
+  // 當你呼叫這個函式的目的是為了「取得運算後的結果」並拿去其他地方用（例如顯示在畫面上），你就必須把那個結果 return (交還) 出來。
   get selectedUserTasks() {
-    return this.tasks.filter(task => task.userId === this.userId); 
-    // filter()會回傳一個"新陣列"，且回傳值型別"永遠是陣列"，就算找不到值的時候也會回傳空陣列[]，不會回傳undefined
-    // find()則是會回傳"單一元素"（可能是物件、字串、數字等，取決於你陣列裡裝什麼），找不到時回傳undefined
+    return this.tasksService.getUserTasks(this.userId);
   }
   
   onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter(task => task.id !== id); // 直接比對整個任務列表，id相同則會直接被篩選掉，達到刪除的效果
+    
   }
-
-  isAddingTask = false;
-  // clicked?: boolean;
 
   onStartAddTask() {
     this.isAddingTask = true;
   }
 
-  onCancelAddTask() {
-    this.isAddingTask = false;
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    // taskData裡拿得到的資料可以直接拿，沒有的項目像:id、userId再隨機生成、指派一下
-    this.tasks.unshift({
-      id: new Date().getTime().toString(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date
-    }); 
-    // 新增完關閉輸入框
+  onCloseAddTask() {
     this.isAddingTask = false;
   }
 }

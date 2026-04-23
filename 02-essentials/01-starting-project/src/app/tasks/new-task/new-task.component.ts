@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter, signal } from '@angular/core';
+import { Component, Output, EventEmitter, signal, inject, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type NewTaskData } from '../task/task.model';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -10,13 +11,14 @@ import { type NewTaskData } from '../task/task.model';
   styleUrl: './new-task.component.scss'
 })
 export class NewTaskComponent {
-  @Output() cancel = new EventEmitter<void>(); // <void>是個特殊type，表示不會emit出任何數據
-
-  @Output() add = new EventEmitter<NewTaskData>();
+  @Input({required: true}) userId!: string;
+  @Output() close = new EventEmitter<void>(); // <void>是個特殊type，表示不會emit出任何數據
 
   enteredTitle = '';
   enteredSummary = '';
   enteredDate = '';
+
+  private tasksService = inject(TasksService)
 
   // signal & two-way-binding
   // enteredTitle = signal('');
@@ -24,14 +26,15 @@ export class NewTaskComponent {
   // enteredDate = signal('');
 
   onCancel() {
-    this.cancel.emit(); // 上面標示了<void>，因此cancel可以emit一個"不攜帶任何數據"的事件
+    this.close.emit(); // 上面標示了<void>，因此cancel可以emit一個"不攜帶任何數據"的事件
   }
 
   onSubmit() {
-    this.add.emit({
+    this.tasksService.addTask({
       title: this.enteredTitle,
       summary: this.enteredSummary,
       date: this.enteredDate
-    })
+    }, this.userId)
+    this.close.emit();
   }
 }
