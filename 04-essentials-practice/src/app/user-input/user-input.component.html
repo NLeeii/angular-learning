@@ -2,6 +2,7 @@
   <div class="input-group">
     <P>
       <label for="initial-investment">INITIAL INVESTMENT</label>
+      <!-- [(ngModel)] 是一個「雙向綁定」的語法糖，它的底層已經自動幫你寫好了 (ngModelChange) 事件監聽，所以不需要像 Signal 一樣手動加 () 來觸發訂閱。 -->
       <input id="initial-investment" name="initial-investment" type="number" [(ngModel)]="enteredInit">
     </P>
     <P>
