@@ -1,17 +1,27 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import type { InvestmentInput } from "./investment-input.model";
 
 @Injectable({providedIn: "root"})
 export class InvestmentService {
 
-  resultData?: {
+  // signal
+  resultData = signal<{
     year: number,
     interest: number,
     valueEndOfYear: number,
     annualInvestment: number,
     totalInterest: number,
     totalAmountInvested: number,
-  }[];
+  }[] | undefined>(undefined);
+
+  // resultData?: {
+  //   year: number,
+  //   interest: number,
+  //   valueEndOfYear: number,
+  //   annualInvestment: number,
+  //   totalInterest: number,
+  //   totalAmountInvested: number,
+  // }[];
 
   CalculateInvestmentResults(data: InvestmentInput) {
     const { initialInvestment, duration, expectedReturn, annualInvestment } = data; // 解構賦值 - Destructuring Assignment，快速把物件 (Object) 裡面的屬性「拆解」出來，並宣告成獨立變數。
@@ -44,7 +54,10 @@ export class InvestmentService {
     // resultData 是 signal，所以需要調用 set 這個method
     // this.resultsData.set(annualData);
 
-    this.resultData = annualData;
+    // this.resultData = annualData;
+
+    // signal
+    this.resultData.set(annualData);
     
   }
 }
