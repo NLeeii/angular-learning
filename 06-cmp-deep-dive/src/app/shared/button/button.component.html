@@ -1,5 +1,12 @@
 <span>
   <ng-content />
 </span>
-<!-- select需要給一個css selector -->
-<ng-content select=".icon" />
+<span class="icon">
+  <!-- select需要給一個css selector -->
+  <!-- 因為使用了ngProjectAs，所以select一個元素 -->
+  <ng-content select="icon">
+    <!-- Fallback content - 備用內容-->
+    <!-- 當沒有得到任何內容時，將使用這個內容 -->
+    ⭢
+  </ng-content>
+</span>
