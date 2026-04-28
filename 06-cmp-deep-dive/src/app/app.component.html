@@ -1,14 +1,17 @@
 <app-header />
 <main>
   <div id="dashboard">
-    <div class="dashboard-item">
+    <!-- 當一個component上有一個應該設置為string的input時，不需要property binding(也就是不用用"[]"包裹起來) -->
+    <app-dashboard-item [image]="{src: 'status.png',alt: 'A signal symbol'}" title="Server Status">
       <app-server-status />
-    </div>
-    <div class="dashboard-item">
+    </app-dashboard-item>
+    <!-- ng-content -->
+    <!-- Angular預設會忽略自定義component的開始與結束標籤之間的任何內容，因為我們沒有指定內容具體要放哪裡 -->
+    <app-dashboard-item [image]="{src: 'globe.png',alt: 'A globe'}" title="Traffic">
       <app-traffic />
-    </div>
-    <div class="dashboard-item">
+    </app-dashboard-item>
+    <app-dashboard-item [image]="{src: 'list.png',alt: 'A list of items'}" title="Support Tickets">
       <app-tickets />
-    </div>
+    </app-dashboard-item>
   </div>
 </main>

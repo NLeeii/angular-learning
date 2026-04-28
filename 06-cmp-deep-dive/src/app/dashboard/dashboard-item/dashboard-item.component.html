@@ -1,8 +1,11 @@
 <div class="dashboard-item">
   <article>
     <header>
-      <img src="list.png" alt="A list of items" />
-      <h2>Support Tickets</h2>
+      <!-- property binding -->
+      <img [src]="image().src" [alt]="image().alt" />
+      <h2>{{ title() }}</h2>
     </header>
+    <!-- this concept of using ng-content as a "placeholder" for the wrapped content is also called "content projection" -->
+    <ng-content />
   </article>
 </div>
