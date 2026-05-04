@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 type StatusType = 'online' | 'offline' | 'unknown';
 
@@ -12,13 +12,19 @@ type StatusType = 'online' | 'offline' | 'unknown';
 })
 
 // implements (實作)，TypeScript (以及很多物件導向語言) 的標準語法。原生JS沒有
-export class ServerStatusComponent implements OnInit {
+// 可以 implements 無數個 interface(規格的概念)
+export class ServerStatusComponent implements OnInit, OnDestroy {
   // currentStatus:'online' | 'offline' | 'unknown' = 'offline';
   currentStatus: StatusType = 'offline';
+  private interval?: ReturnType<typeof setInterval>;
   
-  // 只在這裡進行基本的"初始化"工作
+  constructor(){}
+
+  // 在這裡進行主要的組件"初始化"工作，不要在constructor()中執行任何複雜的組件初始化或設置工作!
+  // ngOnInit會等到組件所有input都接收到訊息才初始化，constructor()不會，還沒得到的值會直接顯示undefined
   ngOnInit() {
-    setInterval(() => {
+    console.log('ON INIT');
+    this.interval = setInterval(() => {
       const rnd = Math.random(); // 0 - 0.999999
       if(rnd < 0.5) {
         this.currentStatus = 'online';
@@ -28,5 +34,13 @@ export class ServerStatusComponent implements OnInit {
         this.currentStatus = 'unknown';
       }
     }, 5000);
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.interval);
+  }
+
+  ngAfterViewInit() {
+    console.log('AFTER VIEW INIT');
   }
 }
