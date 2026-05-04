@@ -1,4 +1,4 @@
-import { Component, input, Input } from '@angular/core';
+import { Component, input, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-item',
@@ -6,9 +6,11 @@ import { Component, input, Input } from '@angular/core';
   imports: [],
   templateUrl: './dashboard-item.component.html',
   styleUrl: './dashboard-item.component.css',
-  host: {
-    class: 'dashboard-item'
-  }
+  // 控制"作用域"
+  // encapsulation: ViewEncapsulation.None,
+  // host: {
+  //   class: 'dashboard-item'
+  // }
 })
 export class DashboardItemComponent {
   // @Input({required: true}) image!: {
