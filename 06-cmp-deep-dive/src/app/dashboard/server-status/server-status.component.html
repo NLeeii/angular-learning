@@ -1,4 +1,14 @@
-@if (currentStatus === "online") {
+<!-- 可以動態地添加或刪除"status"這個class，符合條件就增加，不符合就刪除 -->
+<!-- <div [class.status]="currentStatus === 'offline'"> -->
+
+<!-- Dynamic Class & Style Binding -->
+<div [class]="{
+  status: true,
+  'status-online': currentStatus === 'online',
+  'status-offline': currentStatus === 'offline',
+  'status-unknown': currentStatus === 'unknown',
+}">
+  @if (currentStatus === "online") {
   <p>Servers are online</p>
   <p>All systems are operational.</p>
 } @else if (currentStatus === "offline") {
@@ -8,3 +18,4 @@
   <p>Server status is unknown</p>
   <p>Fetching server status failed.</p>
 }
+</div>
