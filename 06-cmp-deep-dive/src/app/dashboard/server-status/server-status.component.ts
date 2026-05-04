@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 type StatusType = 'online' | 'offline' | 'unknown';
 
@@ -11,12 +11,13 @@ type StatusType = 'online' | 'offline' | 'unknown';
   styleUrl: './server-status.component.css' 
 })
 
-
-export class ServerStatusComponent {
+// implements (實作)，TypeScript (以及很多物件導向語言) 的標準語法。原生JS沒有
+export class ServerStatusComponent implements OnInit {
   // currentStatus:'online' | 'offline' | 'unknown' = 'offline';
   currentStatus: StatusType = 'offline';
-
-  constructor() {
+  
+  // 只在這裡進行基本的"初始化"工作
+  ngOnInit() {
     setInterval(() => {
       const rnd = Math.random(); // 0 - 0.999999
       if(rnd < 0.5) {
