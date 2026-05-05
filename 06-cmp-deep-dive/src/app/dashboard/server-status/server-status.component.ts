@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 
 type StatusType = 'online' | 'offline' | 'unknown';
 
@@ -60,9 +60,16 @@ type StatusType = 'online' | 'offline' | 'unknown';
 // DestroyRef
 export class ServerStatusComponent implements OnInit {
 
-  currentStatus: StatusType = 'offline';
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('offline');
 
   private destroyRef = inject(DestroyRef);
+
+  constructor() {
+    // 會訂閱signal
+    effect(() => {
+      console.log(this.currentStatus());
+    });
+  }
 
   // 在這裡進行主要的組件"初始化"工作，不要在constructor()中執行任何複雜的組件初始化或設置工作!
   // ngOnInit會等到組件所有input都接收到訊息才初始化，constructor()不會，還沒得到的值會直接顯示undefined
@@ -74,11 +81,11 @@ export class ServerStatusComponent implements OnInit {
     const interval = setInterval(() => {
       const rnd = Math.random(); // 0 - 0.999999
       if(rnd < 0.5) {
-        this.currentStatus = 'online';
+        this.currentStatus.set('online');
       } else if (rnd < 0.9) {
-        this.currentStatus = 'offline';
+        this.currentStatus.set('offline');
       } else {
-        this.currentStatus = 'unknown';
+        this.currentStatus.set('unknown');
       }
     }, 5000);
     
