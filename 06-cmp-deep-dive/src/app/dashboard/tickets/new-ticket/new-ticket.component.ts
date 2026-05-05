@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { ControlComponent } from "../../../shared/control/control.component";
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,8 @@ export class NewTicketComponent {
   // @ViewChild - Angular提供的裝飾器
   // 可以傳遞一個 Template Variable 的名稱 或 component class
   // 使用ViewChild的好處是:隨時隨地都可以操作抓到的DOM元素，不用等事件觸發才能用
-  @ViewChild('form') form?: ElementRef<HTMLFormElement>;
+  // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
+  private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
   // Template Variables - Angular提供
   onSubmit(title: string, ticketText: string) {
@@ -41,7 +42,7 @@ export class NewTicketComponent {
     //    這步非常關鍵，打開盒子後拿出的就是「原生的 HTML 實體 DOM」。
     // 7. .reset()：呼叫原生 HTML 表單內建的清空方法。
     // ==========================================
-    this.form?.nativeElement.reset();
+    this.form().nativeElement.reset();
   }
 
   // ngModel 用法
