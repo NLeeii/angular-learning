@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { ControlComponent } from "../../../shared/control/control.component";
 import { FormsModule } from '@angular/forms';
@@ -30,6 +30,8 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
+  @Output() add = new EventEmitter<{title: string; text: string}>;
+
   ngOnInit(): void {
     console.log('OnInit');
     console.log(this.form()?.nativeElement);
@@ -54,6 +56,8 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     // 7. .reset()：呼叫原生 HTML 表單內建的清空方法。
     // ==========================================
     this.form().nativeElement.reset();
+
+    this.add.emit({title: title, text: ticketText});
   }
 
   // ngModel 用法
