@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, viewChild, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, viewChild, ViewChild } from '@angular/core';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { ControlComponent } from "../../../shared/control/control.component";
 import { FormsModule } from '@angular/forms';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './new-ticket.component.html',
   styleUrl: './new-ticket.component.css'
 })
-export class NewTicketComponent {
+export class NewTicketComponent implements OnInit, AfterViewInit {
 
   // ==========================================
   // 1. @ViewChild ('form')：【TypeScript 的尋人雷達】
@@ -29,6 +29,17 @@ export class NewTicketComponent {
   // 使用ViewChild的好處是:隨時隨地都可以操作抓到的DOM元素，不用等事件觸發才能用
   // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
+
+  ngOnInit(): void {
+    console.log('OnInit');
+    console.log(this.form()?.nativeElement);
+  }
+
+  ngAfterViewInit(): void {
+    console.log('After View Init');
+    console.log(this.form()?.nativeElement);
+  }
+
 
   // Template Variables - Angular提供
   onSubmit(title: string, ticketText: string) {

@@ -1,4 +1,4 @@
-import { Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, contentChild, ContentChild, ElementRef, HostBinding, HostListener, inject, input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -17,7 +17,7 @@ import { Component, contentChild, ContentChild, ElementRef, HostBinding, HostLis
     '(click)': 'onClick()'
   }
 })
-export class ControlComponent {
+export class ControlComponent implements AfterContentInit {
   // 為組件添加property
   // @HostBinding('class') className = 'control';
   // @HostListener('click') onClick() {
@@ -43,6 +43,10 @@ export class ControlComponent {
   // signal
   private control = contentChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
 
+  ngAfterContentInit(): void {
+    console.log('After Content Init');
+    console.log(this.control()?.nativeElement);
+  }
 
   // onClick()）不叫 Function，而是稱為 方法 (Method)
   onClick() {
