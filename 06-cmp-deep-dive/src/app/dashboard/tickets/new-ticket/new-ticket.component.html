@@ -1,6 +1,25 @@
-<form>
+<form (ngSubmit)="onSubmit(titleInput.value, textInput.value)">
   <app-control label="Title">
-    <input name="title" id="title" />
+    <!-- Template Variables - Angular提供 -->
+    <!-- 井字號後面的名稱自訂 -->
+    <input name="title" id="title" #titleInput />
+  </app-control>
+  <app-control label="Request">
+    <textarea name="request" id="request" rows="3" #textInput ></textarea>
+  </app-control>
+  <p>
+    <button appButton>
+      Submit
+      <span ngProjectAs="icon">⭢</span>
+    </button>
+  </p>
+</form>
+
+
+<!-- ngModel用法 -->
+<!-- <form (ngSubmit)="onSubmit()">
+  <app-control label="Title">
+    <input name="title" id="title" [(ngModel)]="title" />
   </app-control>
   <app-control label="Request">
     <textarea name="request" id="request" rows="3"></textarea>
@@ -11,4 +30,4 @@
       <span ngProjectAs="icon">⭢</span>
     </button>
   </p>
-</form>
+</form> -->
