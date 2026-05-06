@@ -1,6 +1,16 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, viewChild, ViewChild } from '@angular/core';
-import { ButtonComponent } from "../../../shared/button/button.component";
-import { ControlComponent } from "../../../shared/control/control.component";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  viewChild,
+  ViewChild,
+} from '@angular/core';
+import { ButtonComponent } from '../../../shared/button/button.component';
+import { ControlComponent } from '../../../shared/control/control.component';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -8,10 +18,9 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [ButtonComponent, ControlComponent, FormsModule],
   templateUrl: './new-ticket.component.html',
-  styleUrl: './new-ticket.component.css'
+  styleUrl: './new-ticket.component.css',
 })
 export class NewTicketComponent implements OnInit, AfterViewInit {
-
   // ==========================================
   // 1. @ViewChild ('form')：【TypeScript 的尋人雷達】
   //    去 HTML 樣板中，尋找身上掛著 `#form` 這個樣板變數 (Template Variable) 名牌的元素。
@@ -30,7 +39,11 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
   // @ViewChild('form') private form?: ElementRef<HTMLFormElement>;
   private form = viewChild.required<ElementRef<HTMLFormElement>>('form');
 
-  @Output() add = new EventEmitter<{title: string; text: string}>;
+  @Output() add = new EventEmitter<{ title: string; text: string }>();
+
+  // two-way binding
+  enteredTitle = '';
+  enteredText = '';
 
   ngOnInit(): void {
     console.log('OnInit');
@@ -42,11 +55,10 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     console.log(this.form()?.nativeElement);
   }
 
-
   // Template Variables - Angular提供
-  onSubmit(title: string, ticketText: string) {
-    console.log(title);
-    console.log(ticketText);
+  onSubmit() {
+    // console.log(title);
+    // console.log(ticketText);
 
     // ==========================================
     // 4. this.form：拿到那個被雷達抓回來的安全盒
@@ -55,9 +67,11 @@ export class NewTicketComponent implements OnInit, AfterViewInit {
     //    這步非常關鍵，打開盒子後拿出的就是「原生的 HTML 實體 DOM」。
     // 7. .reset()：呼叫原生 HTML 表單內建的清空方法。
     // ==========================================
-    this.form().nativeElement.reset();
-
-    this.add.emit({title: title, text: ticketText});
+    // this.form().nativeElement.reset();
+    
+    this.add.emit({ title: this.enteredTitle, text: this.enteredText });
+    this.enteredTitle = '';
+    this.enteredText = '';
   }
 
   // ngModel 用法
