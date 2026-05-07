@@ -19,6 +19,8 @@ export class LoginComponent {
   });
 
   // 簡單email欄位驗證
+  // get 是一個用來封裝複雜邏輯判斷的極佳工具
+  // 可比作為命名清晰、唯讀且隨時保持最新狀態的「虛擬屬性」
   get emailIsInvalid() {
     return (
       this.form.controls.email.touched &&
