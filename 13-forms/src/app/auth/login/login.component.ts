@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { of } from 'rxjs';
+import { debounce, debounceTime, of } from 'rxjs';
 
 // 自定義Validator
 function mustContainQuestionMark(control: AbstractControl) {
@@ -34,7 +34,8 @@ function emailIsUnique(control: AbstractControl) {
   styleUrl: './login.component.css',
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  private destroyRef = inject(DestroyRef);
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.email, Validators.required],
@@ -63,6 +64,29 @@ export class LoginComponent {
     );
   }
 
+  ngOnInit(): void {
+    const savedForm = window.localStorage.getItem('saved-login-form');
+
+    if (savedForm) {
+      const loadForm = JSON.parse(savedForm);
+
+      // setValue 要求傳入的物件結構必須與表單完全一致，而 patchValue 允許只更新部分欄位
+      this.form.patchValue({
+        email: loadForm.email
+      });
+    }
+    
+    const subscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe({
+      next: value => {
+        window.localStorage.setItem('saved-login-form', JSON.stringify({email: value.email}));
+      }
+    });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe()
+    });
+  }
+  
   onSubmit() {
     console.log(this.form);
     const enteredEmail = this.form.value.email;
