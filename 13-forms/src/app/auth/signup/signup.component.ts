@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -13,11 +13,13 @@ export class SignupComponent {
     email: new FormControl('', {
       validators: [Validators.email, Validators.required]
     }),
-    password: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)]
-    }),
-    confirmPassword: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(6)]
+    passwords: new FormGroup({
+      password: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(6)]
+      }),
+      confirmPassword: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(6)]
+      }),
     }),
     firstName: new FormControl('', {
       validators: [Validators.required]
@@ -25,30 +27,35 @@ export class SignupComponent {
     lastName: new FormControl('', {
       validators: [Validators.required]
     }),
-    street: new FormControl('', {
-      validators: [Validators.required]
-    }),
-    number: new FormControl('', {
-      validators: [Validators.required]
-    }),
-    postalCode: new FormControl('', {
-      validators: [Validators.required]
-    }),
-    city: new FormControl('', {
-      validators: [Validators.required]
+    address: new FormGroup({
+      street: new FormControl('', {
+        validators: [Validators.required]
+      }),
+      number: new FormControl('', {
+        validators: [Validators.required]
+      }),
+      postalCode: new FormControl('', {
+        validators: [Validators.required]
+      }),
+      city: new FormControl('', {
+        validators: [Validators.required]
+      }),
     }),
     role: new FormControl<'student' | 'teacher' | 'employee' | 'founder' | 'other'>('student', {
       validators: [Validators.required]
     }),
+    source: new FormArray([
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false),
+    ]),
     agree: new FormControl(false, {
       validators: [Validators.required]
     })
   });
 
   onSubmit() {
-    const enteredEmail = this.form.controls.email.value
-    const enteredPassword = this.form.controls.password.value
-    console.log(enteredEmail, enteredPassword);
+    console.log(this.form);
     this.onClear();
   }
 
